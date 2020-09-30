@@ -220,8 +220,8 @@ CFsurvival <- function(time, event, treat, confounders, fit.times=sort(unique(ti
             if(nuis$save.nuis.fits) result$prop.fits <- vector(mode='list',length=nuis$V)
             for(v in 1:nuis$V) {
                 if(verbose) message(paste("Fold ", v, "..."))
-                train <- nuis$folds != v
-                test <- nuis$folds == v
+                train <- nuis$fold != v
+                test <- nuis$fold == v
                 prop.fit <- .estimate.propensity(A=treat[train], W=confounders[train,,drop=FALSE], newW=confounders[test,, drop=FALSE], SL.library=nuis$prop.SL.library, save.fit = nuis$save.nuis.fits, verbose = FALSE)
                 nuis$prop.pred[test] <- prop.fit$prop.pred
                 if(nuis$save.nuis.fits) result$prop.fits[[v]] <- prop.fit$prop.fit
@@ -259,8 +259,8 @@ CFsurvival <- function(time, event, treat, confounders, fit.times=sort(unique(ti
             if(nuis$save.nuis.fits) result$surv.fits <- vector(mode='list',length=nuis$V)
             for(v in 1:nuis$V) {
                 if(verbose) message(paste("Fold ", v, "..."))
-                train <- nuis$folds != v
-                test <- nuis$folds == v
+                train <- nuis$fold != v
+                test <- nuis$fold == v
                 surv.fit <- .estimate.conditional.survival(Y=time[train], Delta=event[train], A=treat[train], W=confounders[train,, drop=FALSE], newW=confounders[test,, drop=FALSE], event.SL.library=nuis$event.SL.library, fit.times=nuis$eval.times, fit.treat=fit.treat, cens.SL.library=nuis$cens.SL.library, save.fit = nuis$save.nuis.fits, verbose = FALSE)
                 if(do.event.pred.0) nuis$event.pred.0[test,] <- surv.fit$event.pred.0
                 if(do.event.pred.1) nuis$event.pred.1[test,] <- surv.fit$event.pred.1
