@@ -52,7 +52,7 @@
             ret$prop.fit <- list(whichScreen = whichScreen, pred.alg = prop.fit)
         }
     } else {
-        prop.fit <- SuperLearner(Y=A, X=W, newX=newW, family=binomial(),
+        prop.fit <- SuperLearner(Y=A, X=W, newX=newW, family="binomial",
                                  SL.library=SL.library, method = "method.NNloglik", verbose = verbose)
         ret$prop.pred <- c(prop.fit$SL.predict)
         if(save.fit) ret$prop.fit <- prop.fit
