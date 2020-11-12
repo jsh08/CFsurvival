@@ -220,8 +220,11 @@ CFsurvival <- function(time, event, treat, confounders, fit.times=sort(unique(ti
             for(v in 1:nuis$V) {
                 if(verbose) message(paste("Fold ", v, "..."))
                 train <- nuis$fold != v
+                if(verbose) message("Train")
                 test <- nuis$fold == v
+                if(verbose) message("Test")
                 prop.fit <- .estimate.propensity(A=treat[train], W=confounders[train,,drop=FALSE], newW=confounders[test,, drop=FALSE], SL.library=nuis$prop.SL.library, save.fit = nuis$save.nuis.fits, verbose = nuis$verbose)
+                if(verbose) message("Fit")
                 nuis$prop.pred[test] <- prop.fit$prop.pred
                 if(nuis$save.nuis.fits) result$prop.fits[[v]] <- prop.fit$prop.fit
             }
