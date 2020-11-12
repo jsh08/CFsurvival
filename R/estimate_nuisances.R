@@ -38,7 +38,6 @@
 .estimate.propensity <- function(A, W, newW, SL.library, save.fit, verbose) {
     ret <- list()
     library(SuperLearner)
-    print("Estimating...")
     if (length(SL.library) == 1) {
         if(length(unlist(SL.library)) == 2 & ncol(W) > 1) {
             screen <- get(SL.library[[1]][2])
@@ -47,7 +46,7 @@
             whichScreen <- rep(TRUE, ncol(W))
         }
         learner <- get(SL.library[[1]][1])
-        prop.fit <- learner(Y = A, X = W[,whichScreen, drop=FALSE], newX = newW[,whichScreen, drop=FALSE], family="binomial")
+        prop.fit <- learner(Y = A, X = W[,whichScreen, drop=FALSE], newX = newW[,whichScreen, drop=FALSE], family=binomial())
         ret$prop.pred <- prop.fit$pred
         if(save.fit) {
             ret$prop.fit <- list(whichScreen = whichScreen, pred.alg = prop.fit)
