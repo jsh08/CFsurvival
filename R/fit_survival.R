@@ -143,7 +143,7 @@ CFsurvival <- function(time, event, treat, confounders, fit.times=sort(unique(ti
     # if(is.null(contrasts)) contrasts <- c("surv.diff", "surv.ratio")
 
     nuis <- do.call("CFsurvival.nuisance.options", nuisance.options)
-    print(nuis)
+
     n <- length(time)
 
     if(sum(1-event) == 0) {
@@ -218,14 +218,10 @@ CFsurvival <- function(time, event, treat, confounders, fit.times=sort(unique(ti
         if(nuis$V > 1) {
             if(nuis$save.nuis.fits) result$prop.fits <- vector(mode='list',length=nuis$V)
             for(v in 1:nuis$V) {
-                if(verbose) message(paste("Fold Round ", v, "..."))
-                if(verbose) message("Start")
+                if(verbose) message(paste("Fold ", v, "..."))
                 train <- nuis$fold != v
-                if(verbose) message("Train")
                 test <- nuis$fold == v
-                if(verbose) message("Test")
                 prop.fit <- .estimate.propensity(A=treat[train], W=confounders[train,,drop=FALSE], newW=confounders[test,, drop=FALSE], SL.library=nuis$prop.SL.library, save.fit = nuis$save.nuis.fits, verbose = nuis$verbose)
-                if(verbose) message("Fit")
                 nuis$prop.pred[test] <- prop.fit$prop.pred
                 if(nuis$save.nuis.fits) result$prop.fits[[v]] <- prop.fit$prop.fit
             }
@@ -626,5 +622,3 @@ CFsurvival.nuisance.options <- function(cross.fit = TRUE, V = ifelse(cross.fit, 
 #     IF.vals <- -dlog.IF * matrix(exp(dlog), nrow=nrow(dlog.IF), ncol=ncol(dlog.IF), byrow=TRUE)
 #     return(list(df=res, IF.vals=IF.vals, maxes=unif.info$maxes))
 # }
-
-
