@@ -46,6 +46,7 @@
             whichScreen <- rep(TRUE, ncol(W))
         }
         learner <- get(SL.library[[1]][1])
+        print(learner)
         prop.fit <- learner(Y = A, X = W[,whichScreen, drop=FALSE], newX = newW[,whichScreen, drop=FALSE], family="binomial")
         ret$prop.pred <- prop.fit$pred
         if(save.fit) {
