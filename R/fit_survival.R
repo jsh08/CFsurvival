@@ -219,6 +219,7 @@ CFsurvival <- function(time, event, treat, confounders, fit.times=sort(unique(ti
             if(nuis$save.nuis.fits) result$prop.fits <- vector(mode='list',length=nuis$V)
             for(v in 1:nuis$V) {
                 if(verbose) message(paste("Fold ", v, "..."))
+                if(verbose) message("Start")
                 train <- nuis$fold != v
                 if(verbose) message("Train")
                 test <- nuis$fold == v
