@@ -143,7 +143,7 @@ CFsurvival <- function(time, event, treat, confounders, fit.times=sort(unique(ti
     # if(is.null(contrasts)) contrasts <- c("surv.diff", "surv.ratio")
 
     nuis <- do.call("CFsurvival.nuisance.options", nuisance.options)
-
+    print(nuis)
     n <- length(time)
 
     if(sum(1-event) == 0) {
